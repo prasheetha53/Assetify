@@ -1,0 +1,9 @@
+pymongo
+dnspython
+Flask-Cors
+scikit-learn
+pandas
+flask_mongoengine
+Flask==2.0.2
+flask-login
+werkzeug==2.0.3

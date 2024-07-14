@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assetify</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Raleway:wght@400;500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" aria-label="Main navigation">
+    <a class="navbar-brand" href="#home">Assetify</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#inventory">Inventory</a></li>
+        <li class="nav-item"><a class="nav-link" href="#insights">Insights</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reports">Reports</a></li>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="#settings">Settings</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="/login.html">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="/register.html">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5 pt-5">
+    <!-- Home Page -->
+    <section id="home" class="hero-section text-center">
+      <div class="hero-content">
+        <h1 class="display-4">Welcome to <em>Assetify</em></h1>
+        <p class="lead">Manage and optimize your IT assets with AI-driven insights.</p>
+        <a href="#inventory" class="btn btn-primary btn-lg">Get Started</a>
+      </div>
+    </section>
+
+    <!-- Inventory Page -->
+    <section id="inventory" class="my-5">
+      <h2>Asset Inventory</h2>
+      <input class="form-control mb-3" type="text" placeholder="Search assets" id="searchAssets">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Asset ID</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="assetTableBody">
+            <!-- Dynamic Data -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Add Asset Form -->
+    <section id="addAssetForm" class="my-5">
+      <h2>Add New Asset</h2>
+      <form>
+        <div class="form-group">
+          <label for="assetId">Asset ID</label>
+          <input type="text" class="form-control" id="assetId" placeholder="Enter asset ID">
+        </div>
+        <div class="form-group">
+          <label for="assetType">Asset Type</label>
+          <input type="text" class="form-control" id="assetType" placeholder="Enter asset type">
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <input type="text" class="form-control" id="status" placeholder="Enter status">
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" placeholder="Enter location">
+        </div>
+        <button type="button" class="btn btn-primary" id="addAssetButton">Add Asset</button>
+      </form>
+    </section>
+
+    <!-- Insights Page -->
+    <section id="insights" class="my-5">
+      <h2>Insights Dashboard</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <p>Asset Utilization</p>
+          <canvas id="utilizationChart"></canvas>
+        </div>
+        <div class="col-md-6">
+          <p>Maintenance Predictions</p>
+          <canvas id="maintenanceChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reports Page -->
+    <section id="reports" class="my-5">
+      <h2>Generate Reports</h2>
+      <button class="btn btn-primary mb-3">Generate Report</button>
+      <ul class="list-group">
+        <!-- Sample Report -->
+        <li class="list-group-item">
+          <a href="#">Report 01</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Settings Page -->
+    <section id="settings" class="my-5">
+      <h2>Settings</h2>
+      <form action="{{ url_for('settings') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="scripts.js"></script>
+
+</body>
+</html>
